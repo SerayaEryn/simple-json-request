@@ -1,0 +1,36 @@
+{
+  "name": "simple-json-request",
+  "version": "0.0.1",
+  "description": "A simple json request module with Promise support.",
+  "main": "index.js",
+  "scripts": {
+    "unit": "tap test/*.test.js",
+    "test": "npm run lint && npm run unit",
+    "lint": "./node_modules/eslint/bin/eslint.js index.js lib/* test/*",
+    "coveralls": "npm run unit --  --cov",
+    "coverage-report": "npm run coveralls && tap --coverage-report=lcov"
+  },
+  "keywords": [
+    "request",
+    "json",
+    "promise",
+    "http"
+  ],
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerayaEryn/simple-json-request.git"
+  },
+  "author": "Denis Fäcke",
+  "license": "MIT",
+  "dependencies": {
+    "simple-get": "^2.7.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.0",
+    "eslint": "^4.19.1",
+    "tap": "^11.1.3"
+  }
+}
