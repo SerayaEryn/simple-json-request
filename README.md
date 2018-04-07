@@ -1,5 +1,6 @@
 # simple-json-request
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SerayaEryn/simple-json-request.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/SerayaEryn/simple-json-request.svg?branch=master)](https://travis-ci.org/SerayaEryn/simple-json-request)
 [![Coverage Status](https://coveralls.io/repos/github/SerayaEryn/simple-json-request/badge.svg?branch=master)](https://coveralls.io/github/SerayaEryn/simple-json-request?branch=master)
 [![NPM version](https://img.shields.io/npm/v/simple-json-request.svg?style=flat)](https://www.npmjs.com/package/simple-json-request)
