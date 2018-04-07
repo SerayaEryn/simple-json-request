@@ -19,12 +19,12 @@ function request(options) {
 
 function get(options) {
   options.method = 'GET';
-  return this.request(options);
+  return request(options);
 }
 
 function post(options) {
   options.method = 'POST';
-  return this.request(options);
+  return request(options);
 }
 
 class HttpError extends Error {
