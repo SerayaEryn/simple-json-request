@@ -11,7 +11,12 @@ function request(options) {
       } else if (response.statusCode >= 400) {
         reject(new HttpError(response.statusCode));
       } else {
-        resolve(JSON.parse(data.toString()));
+        try {
+          const parsedData = JSON.parse(data.toString());
+          resolve(parsedData);
+        } catch (error) {
+          reject(error);
+        }
       }
     });
   });

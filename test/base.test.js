@@ -133,3 +133,25 @@ test('Should not follow too many redirects', t => {
       });
   });
 });
+
+test('Should handle parse errors correctly', t => {
+  t.plan(3);
+
+  const server = http.createServer((req, res) => {
+    t.strictEqual(req.url, '/test');
+    t.strictEqual(req.method, 'GET');
+    res.statusCode = 200;
+    res.end('{data":hello world"}');
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port;
+    jsonRequest.get({
+      url: `http://localhost:${port}/test`
+    })
+      .catch((err) => {
+        t.ok(err);
+        server.close();
+      });
+  });
+});
