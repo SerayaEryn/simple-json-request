@@ -1,7 +1,8 @@
 'use strict';
 
 const simpleGet = require('simple-get');
-const http = require('http');
+const HttpError = require('./lib/HttpError');
+const JsonParseError = require('./lib/JsonParseError');
 
 function request(options) {
   return new Promise((resolve, reject) => {
@@ -11,12 +12,7 @@ function request(options) {
       } else if (response.statusCode >= 400) {
         reject(new HttpError(response.statusCode));
       } else {
-        try {
-          const parsedData = JSON.parse(data.toString());
-          resolve(parsedData);
-        } catch (error) {
-          reject(error);
-        }
+        parse(data, resolve, reject);
       }
     });
   });
@@ -32,11 +28,12 @@ function post(options) {
   return request(options);
 }
 
-class HttpError extends Error {
-  constructor(statusCode) {
-    super(http.STATUS_CODES[statusCode]);
-    this.statusCode = statusCode;
-    this.code = http.STATUS_CODES[statusCode].toUpperCase().replace(/ /g, '_');
+function parse(data, resolve, reject) {
+  try {
+    const parsedData = JSON.parse(data.toString());
+    resolve(parsedData);
+  } catch (error) {
+    reject(new JsonParseError(data));
   }
 }
 
