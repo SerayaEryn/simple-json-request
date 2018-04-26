@@ -5,6 +5,10 @@ const HttpError = require('./lib/HttpError');
 const JsonParseError = require('./lib/JsonParseError');
 
 function request(options) {
+  if (!options.headers) {
+    options.headers = {};
+  }
+  options.headers.accept = 'application/json';
   return new Promise((resolve, reject) => {
     simpleGet.concat(options, (error, response, data) => {
       if (error) {

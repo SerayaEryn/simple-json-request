@@ -31,6 +31,30 @@ test('Should handle get request', t => {
   });
 });
 
+test('Should set accept header', t => {
+  t.plan(1);
+
+  const server = http.createServer((req, res) => {
+    t.strictEqual(req.headers.accept, 'application/json');
+    res.statusCode = 200;
+    res.end('{"data":"hello world"}');
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port;
+    jsonRequest.get({
+      url: `http://localhost:${port}/test`
+    })
+      .then((data) => {
+        server.close();
+      })
+      .catch((err) => {
+        t.error(err);
+        server.close();
+      });
+  });
+});
+
 test('Should reject with 500 error', t => {
   t.plan(5);
 
