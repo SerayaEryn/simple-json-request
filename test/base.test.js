@@ -105,6 +105,32 @@ test('Should reject with 401 error', t => {
   });
 });
 
+test('Should pass data with error', t => {
+  t.plan(6);
+
+  const server = http.createServer((req, res) => {
+    t.strictEqual(req.url, '/test');
+    res.statusCode = 500;
+    res.end('{"data":"hello world"}');
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port;
+    jsonRequest.get({
+      url: `http://localhost:${port}/test`
+    })
+      .then(() => server.close())
+      .catch((err) => {
+        t.ok(err);
+        t.strictEqual(err.statusCode, 500);
+        t.strictEqual(err.message, 'Internal Server Error');
+        t.strictEqual(err.code, 'INTERNAL_SERVER_ERROR');
+        t.strictEqual(err.data.toString(), '{"data":"hello world"}');
+        server.close();
+      });
+  });
+});
+
 test('Should handle post request', t => {
   t.plan(3);
 

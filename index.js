@@ -14,7 +14,7 @@ function request(options) {
       if (error) {
         reject(error);
       } else if (response.statusCode >= 400) {
-        reject(new HttpError(response.statusCode));
+        reject(new HttpError(response.statusCode, data));
       } else {
         parse(data, resolve, reject);
       }
