@@ -31,6 +31,35 @@ test('Should handle get request', t => {
   });
 });
 
+test('Should handle get request with headers', t => {
+  t.plan(3);
+
+  const server = http.createServer((req, res) => {
+    t.strictEqual(req.url, '/test');
+    t.strictEqual(req.method, 'GET');
+    res.statusCode = 200;
+    res.end('{"data":"hello world"}');
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port;
+    jsonRequest.get({
+      url: `http://localhost:${port}/test`,
+      headers: {
+        header: 'value'
+      }
+    })
+      .then((data) => {
+        t.deepEqual(data, {data: 'hello world'});
+        server.close();
+      })
+      .catch((err) => {
+        t.error(err);
+        server.close();
+      });
+  });
+});
+
 test('Should use custom json parser', t => {
   t.plan(3);
 
