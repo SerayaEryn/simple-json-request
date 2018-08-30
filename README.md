@@ -46,9 +46,17 @@ Allows to pass headers with the request.
 #### body
 The body of a post request.
 #### form
+
 The form data of a post request with `Content-Type` : `application/x-www-form-urlencoded`.
+
 #### maxRedirects
+
 The maximum number of redirects to follow in a request. Defaults to `10`.
+
+### parser
+
+Allows to specify a custom json parser like [turbo-json-parse](https://github.com/mafintosh/turbo-json-parse).
+
 ## License
 
 [MIT](./LICENSE)

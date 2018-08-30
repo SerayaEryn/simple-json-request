@@ -2,7 +2,7 @@
   "name": "simple-json-request",
   "version": "0.2.0",
   "description": "A simple json request module with Promise support.",
-  "main": "index.js",
+  "main": "lib/SimpleJsonRequest.js",
   "scripts": {
     "unit": "tap test/*.test.js",
     "test": "npm run lint && npm run unit",
