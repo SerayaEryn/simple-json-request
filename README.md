@@ -41,14 +41,20 @@ The url to request.
 #### method
 The http method. Supports `GET`, `POST`, `PUT`, `PATCH`, `HEAD` and `DELETE`.
 #### timeout
-Allows to set a timeout in milliseconds on the request.
+Allows to set a socket timeout in milliseconds.
 #### headers
 Allows to pass headers with the request.
 #### body
+
 The body of a post request.
+
 #### form
 
 The form data of a post request with `Content-Type` : `application/x-www-form-urlencoded`.
+
+#### readTimeout
+
+Allows to set a read timeout in milliseconds.
 
 #### maxRedirects
 
