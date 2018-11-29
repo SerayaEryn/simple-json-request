@@ -113,6 +113,33 @@ test('Should set accept header', t => {
   })
 })
 
+test('Should set read timeout', t => {
+  t.plan(2)
+
+  const server = http.createServer((req, res) => {
+    setTimeout(() => {
+      res.statusCode = 200
+      res.end('{"data":"hello world"}')
+    }, 250)
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.get({
+      url: `http://localhost:${port}/test`,
+      readTimeout: 100
+    })
+      .then((data) => {
+        server.close()
+      })
+      .catch((err) => {
+        t.ok(err)
+        t.strictEqual(err.code, 'ERR_READ_TIMEOUT')
+        server.close()
+      })
+  })
+})
+
 test('Should reject with 500 error', t => {
   t.plan(5)
 
