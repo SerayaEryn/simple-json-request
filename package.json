@@ -4,11 +4,11 @@
   "description": "A simple json request module with Promise support.",
   "main": "lib/SimpleJsonRequest.js",
   "scripts": {
-    "unit": "tap test/*.test.js",
+    "unit": "ava test/*.test.js",
     "test": "npm run lint && npm run unit",
     "lint": "standard index.js lib/* test/*",
-    "coveralls": "npm run unit --  --cov",
-    "coverage-report": "npm run coveralls && tap --coverage-report=lcov"
+    "coveralls": " nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage-report": "nyc npm test && nyc report --reporter=html"
   },
   "keywords": [
     "request",
@@ -29,8 +29,9 @@
     "simple-get": "^3.0.2"
   },
   "devDependencies": {
+    "ava": "^1.4.1",
     "coveralls": "^3.0.0",
-    "standard": "^12.0.1",
-    "tap": "^12.0.0"
+    "nyc": "^14.1.0",
+    "standard": "^12.0.1"
   }
 }

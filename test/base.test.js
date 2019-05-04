@@ -1,16 +1,15 @@
 'use strict'
 
-const t = require('tap')
-const test = t.test
+const test = require('ava')
 const http = require('http')
 const jsonRequest = require('..')
 
-test('Should handle get request', t => {
+test.cb('Should handle get request', t => {
   t.plan(3)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'GET')
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
     res.statusCode = 200
     res.end('{"data":"hello world"}')
   })
@@ -22,21 +21,22 @@ test('Should handle get request', t => {
     })
       .then((data) => {
         t.deepEqual(data, { data: 'hello world' })
+        t.end()
         server.close()
       })
       .catch((err) => {
-        t.error(err)
+        t.falsy(err)
         server.close()
       })
   })
 })
 
-test('Should handle get request with headers', t => {
+test.cb('Should handle get request with headers', t => {
   t.plan(3)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'GET')
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
     res.statusCode = 200
     res.end('{"data":"hello world"}')
   })
@@ -51,21 +51,22 @@ test('Should handle get request with headers', t => {
     })
       .then((data) => {
         t.deepEqual(data, { data: 'hello world' })
+        t.end()
         server.close()
       })
       .catch((err) => {
-        t.error(err)
+        t.falsy(err)
         server.close()
       })
   })
 })
 
-test('Should use custom json parser', t => {
+test.cb('Should use custom json parser', t => {
   t.plan(3)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'GET')
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
     res.statusCode = 200
     res.end('{"data":"hello world"}')
   })
@@ -80,20 +81,21 @@ test('Should use custom json parser', t => {
     })
       .then((data) => {
         t.deepEqual(data, { hello: 'world' })
+        t.end()
         server.close()
       })
       .catch((err) => {
-        t.error(err)
+        t.falsy(err)
         server.close()
       })
   })
 })
 
-test('Should set accept header', t => {
+test.cb('Should set accept header', t => {
   t.plan(1)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.headers.accept, 'application/json')
+    t.is(req.headers.accept, 'application/json')
     res.statusCode = 200
     res.end('{"data":"hello world"}')
   })
@@ -104,16 +106,17 @@ test('Should set accept header', t => {
       url: `http://localhost:${port}/test`
     })
       .then((data) => {
+        t.end()
         server.close()
       })
       .catch((err) => {
-        t.error(err)
+        t.falsy(err)
         server.close()
       })
   })
 })
 
-test('Should set read timeout', t => {
+test.cb('Should set read timeout', t => {
   t.plan(2)
 
   const server = http.createServer((req, res) => {
@@ -133,18 +136,19 @@ test('Should set read timeout', t => {
         server.close()
       })
       .catch((err) => {
-        t.ok(err)
-        t.strictEqual(err.code, 'ERR_READ_TIMEOUT')
+        t.truthy(err)
+        t.is(err.code, 'ERR_READ_TIMEOUT')
+        t.end()
         server.close()
       })
   })
 })
 
-test('Should reject with 500 error', t => {
+test.cb('Should reject with 500 error', t => {
   t.plan(5)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
+    t.is(req.url, '/test')
     res.statusCode = 500
     res.end('{"data":"hello world"}')
   })
@@ -156,20 +160,21 @@ test('Should reject with 500 error', t => {
     })
       .then(() => server.close())
       .catch((err) => {
-        t.ok(err)
-        t.strictEqual(err.statusCode, 500)
-        t.strictEqual(err.message, 'Internal Server Error')
-        t.strictEqual(err.code, 'INTERNAL_SERVER_ERROR')
+        t.truthy(err)
+        t.is(err.statusCode, 500)
+        t.is(err.message, 'Internal Server Error')
+        t.is(err.code, 'INTERNAL_SERVER_ERROR')
+        t.end()
         server.close()
       })
   })
 })
 
-test('Should reject with 401 error', t => {
+test.cb('Should reject with 401 error', t => {
   t.plan(5)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
+    t.is(req.url, '/test')
     res.statusCode = 401
     res.end('{"data":"hello world"}')
   })
@@ -181,20 +186,21 @@ test('Should reject with 401 error', t => {
     })
       .then(() => server.close())
       .catch((err) => {
-        t.ok(err)
-        t.strictEqual(err.statusCode, 401)
-        t.strictEqual(err.message, 'Unauthorized')
-        t.strictEqual(err.code, 'UNAUTHORIZED')
+        t.truthy(err)
+        t.is(err.statusCode, 401)
+        t.is(err.message, 'Unauthorized')
+        t.is(err.code, 'UNAUTHORIZED')
+        t.end()
         server.close()
       })
   })
 })
 
-test('Should pass data with error', t => {
+test.cb('Should pass data with error', t => {
   t.plan(6)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
+    t.is(req.url, '/test')
     res.statusCode = 500
     res.end('{"data":"hello world"}')
   })
@@ -206,22 +212,23 @@ test('Should pass data with error', t => {
     })
       .then(() => server.close())
       .catch((err) => {
-        t.ok(err)
-        t.strictEqual(err.statusCode, 500)
-        t.strictEqual(err.message, 'Internal Server Error')
-        t.strictEqual(err.code, 'INTERNAL_SERVER_ERROR')
-        t.strictEqual(err.data.toString(), '{"data":"hello world"}')
+        t.truthy(err)
+        t.is(err.statusCode, 500)
+        t.is(err.message, 'Internal Server Error')
+        t.is(err.code, 'INTERNAL_SERVER_ERROR')
+        t.is(err.data.toString(), '{"data":"hello world"}')
+        t.end()
         server.close()
       })
   })
 })
 
-test('Should handle post request', t => {
+test.cb('Should handle post request', t => {
   t.plan(3)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'POST')
+    t.is(req.url, '/test')
+    t.is(req.method, 'POST')
     res.statusCode = 200
     res.end('{"data":"hello world"}')
   })
@@ -233,21 +240,22 @@ test('Should handle post request', t => {
     })
       .then((data) => {
         t.deepEqual(data, { data: 'hello world' })
+        t.end()
         server.close()
       })
       .catch((err) => {
-        t.error(err)
+        t.falsy(err)
         server.close()
       })
   })
 })
 
-test('Should not follow too many redirects', t => {
+test.cb('Should not follow too many redirects', t => {
   t.plan(5)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'GET')
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
     res.statusCode = 302
     res.setHeader('Location', '/test')
     res.end()
@@ -263,18 +271,19 @@ test('Should not follow too many redirects', t => {
         server.close()
       })
       .catch((err) => {
-        t.ok(err)
+        t.truthy(err)
+        t.end()
         server.close()
       })
   })
 })
 
-test('Should handle parse errors correctly', t => {
+test.cb('Should handle parse errors correctly', t => {
   t.plan(3)
 
   const server = http.createServer((req, res) => {
-    t.strictEqual(req.url, '/test')
-    t.strictEqual(req.method, 'GET')
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
     res.statusCode = 200
     res.end('{data":hello world"}')
   })
@@ -285,7 +294,8 @@ test('Should handle parse errors correctly', t => {
       url: `http://localhost:${port}/test`
     })
       .catch((err) => {
-        t.ok(err)
+        t.truthy(err)
+        t.end()
         server.close()
       })
   })
