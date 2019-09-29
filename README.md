@@ -35,6 +35,14 @@ Executes a request with the specified `options`. `options` may be a string repre
 A convenience function that uses the method `GET` by default.
 ### post(options)
 A convenience function that uses the method `POST` by default.
+### put(options)
+A convenience function that uses the method `PUT` by default.
+### delete(options)
+A convenience function that uses the method `DELETE` by default.
+### head(options)
+A convenience function that uses the method `HEAD` by default.
+### patch(options)
+A convenience function that uses the method `PATCH` by default.
 ### options
 
 #### url

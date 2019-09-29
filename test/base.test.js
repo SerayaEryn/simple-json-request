@@ -300,6 +300,114 @@ test.cb('Should handle post request', t => {
   })
 })
 
+test.cb('Should handle put request', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'PUT')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.put({
+      url: `http://localhost:${port}/test`
+    })
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
+test.cb('Should handle delete request', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'DELETE')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.delete({
+      url: `http://localhost:${port}/test`
+    })
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
+test.cb('Should handle head request', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'HEAD')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.head({
+      url: `http://localhost:${port}/test`
+    })
+      .then((data) => {
+        t.deepEqual(data, null)
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
+test.cb('Should handle patch request', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'PATCH')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.patch({
+      url: `http://localhost:${port}/test`
+    })
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
 test.cb('Should handle post request where options is the url as string', t => {
   t.plan(3)
 
