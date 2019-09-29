@@ -1,10 +1,10 @@
 # simple-json-request
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/SerayaEryn/simple-json-request.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/SerayaEryn/simple-json-request.svg?branch=master)](https://travis-ci.org/SerayaEryn/simple-json-request)
+![Build Status](https://github.com/SerayaEryn/simple-json-request/workflows/ci/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/SerayaEryn/simple-json-request/badge.svg?branch=master)](https://coveralls.io/github/SerayaEryn/simple-json-request?branch=master)
 [![NPM version](https://img.shields.io/npm/v/simple-json-request.svg?style=flat)](https://www.npmjs.com/package/simple-json-request)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Greenkeeper badge](https://badges.greenkeeper.io/SerayaEryn/simple-json-request.svg)](https://greenkeeper.io/)
 
 A simple module to make json requests with Promise support, that wraps around the [simple-get](https://github.com/feross/simple-get) module.
 
