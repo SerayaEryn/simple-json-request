@@ -31,6 +31,56 @@ test.cb('Should handle get request', t => {
   })
 })
 
+test.cb('Should handle get request where options is the url as string', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.get(`http://localhost:${port}/test`)
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
+test.cb('Should handle request where options is the url as string', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'GET')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.request(`http://localhost:${port}/test`)
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
 test.cb('Should handle get request with headers', t => {
   t.plan(3)
 
@@ -238,6 +288,31 @@ test.cb('Should handle post request', t => {
     jsonRequest.post({
       url: `http://localhost:${port}/test`
     })
+      .then((data) => {
+        t.deepEqual(data, { data: 'hello world' })
+        t.end()
+        server.close()
+      })
+      .catch((err) => {
+        t.falsy(err)
+        server.close()
+      })
+  })
+})
+
+test.cb('Should handle post request where options is the url as string', t => {
+  t.plan(3)
+
+  const server = http.createServer((req, res) => {
+    t.is(req.url, '/test')
+    t.is(req.method, 'POST')
+    res.statusCode = 200
+    res.end('{"data":"hello world"}')
+  })
+
+  server.listen(0, () => {
+    const port = server.address().port
+    jsonRequest.post(`http://localhost:${port}/test`)
       .then((data) => {
         t.deepEqual(data, { data: 'hello world' })
         t.end()

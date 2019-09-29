@@ -30,20 +30,29 @@ request.request({
 ```
 ## API
 ### request(options)
-Executes a request with the specified `options`. Returns a promise that either resolves the parsed data or rejects with an error.
+Executes a request with the specified `options`. `options` may be a string representing a url. Returns a promise that either resolves the parsed data or rejects with an error.
 ### get(options)
 A convenience function that uses the method `GET` by default.
 ### post(options)
 A convenience function that uses the method `POST` by default.
 ### options
+
 #### url
+
 The url to request.
+
 #### method
+
 The http method. Supports `GET`, `POST`, `PUT`, `PATCH`, `HEAD` and `DELETE`.
+
 #### timeout
+
 Allows to set a socket timeout in milliseconds.
+
 #### headers
+
 Allows to pass headers with the request.
+
 #### body
 
 The body of a post request.
